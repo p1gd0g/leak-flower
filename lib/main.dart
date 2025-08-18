@@ -64,10 +64,11 @@ class Home extends StatelessWidget {
                   if (id == null) {
                     return null;
                   }
+                  var movieRecord = MovieRecord.fromJson(movie.data);
                   final cc = Get.put(ConnectController());
                   return Center(
                     child: FutureBuilder(
-                      future: cc.getMovieData(id),
+                      future: cc.getMovieData(movieRecord),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasError) {

@@ -2,9 +2,28 @@ import 'dart:async';
 
 import 'package:html/parser.dart';
 import 'package:get/get.dart';
+import 'package:myapp/controller/pocketbase.dart';
+import 'package:pocketbase/pocketbase.dart';
 
 class ConnectController extends GetConnect {
-  Future<Response<OutputCard?>> getMovieData(dynamic movieID) async {
+  Future<Response<OutputCard?>> getMovieData(MovieRecord movieRecord) async {
+    final movieID = movieRecord.doubanID;
+    final pbc = Get.put(PBController());
+
+    late Rating rating;
+    try {
+      final record = await pbc.pb
+          .collection(collectionRatings)
+          .getFirstListItem(
+            // '$fieldDoubanID="$movieID" && $fieldUser="${pbc.authStore.record?.id}"',
+            '$fieldMovieID=$movieID && $fieldUser=${pbc.authStore.record?.id}',
+          );
+      Get.log('Rating for movie $movieID: ${record.data}');
+      rating = Rating.fromJson(record.data);
+    } on ClientException catch (e) {
+      Get.log('No rating found for movie $movieID: $e');
+    }
+
     final url = 'https://api.eo.p1gd0g.cc';
     return await get<OutputCard?>(
       url,
@@ -26,7 +45,7 @@ class ConnectController extends GetConnect {
 
         urlstr = urlstr.replaceFirst('https://', 'https://md.p1gd0g.cc/');
 
-        return OutputCard(imgUrl: urlstr);
+        return OutputCard(imgUrl: urlstr, rating: rating);
       },
       query: {'id': movieID.toString()},
     );
@@ -35,6 +54,42 @@ class ConnectController extends GetConnect {
 
 class OutputCard {
   String? imgUrl;
+  Rating? rating;
+  OutputCard({this.imgUrl, this.rating});
+}
 
-  OutputCard({this.imgUrl});
+class Rating {
+  String? id;
+  String? user;
+  String? movieID;
+  double? userRatingScore;
+  double? userRatingStar;
+
+  Rating({
+    this.id,
+    this.user,
+    this.movieID,
+    this.userRatingScore,
+    this.userRatingStar,
+  });
+
+  Rating.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    user = json[fieldUser];
+    movieID = json[fieldMovieID];
+    userRatingScore = (json['userRatingScore'] as num?)?.toDouble();
+    userRatingStar = (json['userRatingStar'] as num?)?.toDouble();
+  }
+}
+
+class MovieRecord {
+  String? id;
+  String? doubanID;
+
+  MovieRecord({this.id, this.doubanID});
+
+  MovieRecord.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    doubanID = json[fieldDoubanID];
+  }
 }

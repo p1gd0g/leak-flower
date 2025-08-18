@@ -5,10 +5,14 @@ import 'package:pocketbase/pocketbase.dart';
 
 const String collectionUsers = 'users';
 const String collectionMovies = 'movies';
+const String collectionRatings = 'ratings';
 
 const String fieldOrders = 'orders';
 const String fieldEmail = 'email';
 const String fieldDoubanID = 'doubanID';
+const String fieldUser = 'user';
+const String fieldMovieID = 'movieID';
+const String fieldUserRatingScore = 'userRatingScore';
 
 const String keyPBAuth = 'pb_auth';
 

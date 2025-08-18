@@ -44,6 +44,8 @@ dependencies:
   pocketbase: ^0.23.0
   flutter_login: ^5.1.0
   html: ^0.15.6
+  syncfusion_flutter_sliders: ^30.2.5
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
