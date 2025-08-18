@@ -5,9 +5,10 @@ import 'package:myapp/controller/connect.dart';
 import 'package:myapp/view/rating.dart';
 
 class MovieItem extends StatelessWidget {
-  const MovieItem(this.outputCard, {super.key});
+  const MovieItem(this.outputCard, this.movieRecord, {super.key});
 
   final OutputCard outputCard;
+  final MovieRecord movieRecord;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class MovieItem extends StatelessWidget {
               ? TextButton(
                   onPressed: () {
                     if (outputCard.rating != null) {
-                      Get.to(() => RatingView());
+                      Get.to(() => RatingView(movieRecord));
                     }
                   },
                   child: Text('我要评分'),

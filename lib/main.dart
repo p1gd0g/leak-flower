@@ -78,7 +78,7 @@ class Home extends StatelessWidget {
                           if (outputCard == null) {
                             return Text('No data found');
                           }
-                          return MovieItem(outputCard);
+                          return MovieItem(outputCard, movieRecord);
                         } else {
                           return CircularProgressIndicator();
                         }
