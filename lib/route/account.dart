@@ -8,9 +8,9 @@ class AccountRoute {
   static onClickAccountBtn() {
     final pbc = Get.put(PBController());
 
-    pbc.pb.collection(collectionMovies).getFullList().then((value) {
-      Get.log('Movies count: ${value.length}');
-    });
+    // pbc.pb.collection(collectionMovies).getFullList().then((value) {
+    //   Get.log('Movies count: ${value.length}');
+    // });
 
     if (pbc.isSignedIn) {
       Get.put(GlobalKeyController()).scaffoldKey.currentState?.openEndDrawer();

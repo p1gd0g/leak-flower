@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:myapp/controller/connect.dart';
 import 'package:myapp/controller/pocketbase.dart';
 import 'package:myapp/route/account.dart';
+import 'package:myapp/util/screen.dart';
+import 'package:myapp/view/movie.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Def {
@@ -47,35 +49,40 @@ class Home extends StatelessWidget {
               final movies = snapshot.data!;
               return GridView.builder(
                 padding: const EdgeInsets.all(8),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: isPortrait ? 2 : 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 540 / 960,
                 ),
                 itemBuilder: (context, index) {
                   final movie = movies.elementAtOrNull(index);
                   if (movie == null) {
                     return null;
                   }
+                  var id = movie.data[fieldDoubanID];
+                  if (id == null) {
+                    return null;
+                  }
                   final cc = Get.put(ConnectController());
-                  return FutureBuilder(
-                    future: cc.getMovieData(movie.data[fieldDoubanID]),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
+                  return Center(
+                    child: FutureBuilder(
+                      future: cc.getMovieData(id),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+                          final outputCard = snapshot.data?.body;
+                          if (outputCard == null) {
+                            return Text('No data found');
+                          }
+                          return MovieItem(outputCard);
+                        } else {
+                          return CircularProgressIndicator();
                         }
-                        final outputCard = snapshot.data?.body;
-                        if (outputCard == null) {
-                          return Text('No data found');
-                        }
-                        return Card(
-                          child: Column(
-                            children: [Image.network(outputCard.imgUrl ?? '')],
-                          ),
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
+                      },
+                    ),
                   );
                 },
               );
@@ -87,7 +94,6 @@ class Home extends StatelessWidget {
       ),
       bottomSheet: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
         children: [
           FutureBuilder<PackageInfo>(
             future: PackageInfo.fromPlatform(),
