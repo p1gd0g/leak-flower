@@ -4,9 +4,13 @@ import 'package:myapp/controller/prefs.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 const String collectionUsers = 'users';
+const String collectionMovies = 'movies';
+
 const String fieldOrders = 'orders';
 const String fieldEmail = 'email';
-const String fieldPBAuth = 'pb_auth';
+const String fieldDoubanID = 'doubanID';
+
+const String keyPBAuth = 'pb_auth';
 
 class PBController extends GetxController {
   late PocketBase pb;
@@ -20,9 +24,9 @@ class PBController extends GetxController {
   onInit() async {
     super.onInit();
 
-    var init = await pc.asyncPrefs.getString(fieldPBAuth);
+    var init = await pc.asyncPrefs.getString(keyPBAuth);
     final store = AsyncAuthStore(
-      save: (String data) async => pc.asyncPrefs.setString(fieldPBAuth, data),
+      save: (String data) async => pc.asyncPrefs.setString(keyPBAuth, data),
       initial: init,
     );
 

@@ -6,13 +6,17 @@ import 'package:myapp/view/login.dart';
 
 class AccountRoute {
   static onClickAccountBtn() {
-    final pb = Get.put(PBController());
+    final pbc = Get.put(PBController());
 
-    if (pb.isSignedIn) {
+    pbc.pb.collection(collectionMovies).getFullList().then((value) {
+      Get.log('Movies count: ${value.length}');
+    });
+
+    if (pbc.isSignedIn) {
       Get.put(GlobalKeyController()).scaffoldKey.currentState?.openEndDrawer();
       return;
     }
 
-    Get.to(LoginView());
+    Get.to(() => LoginView());
   }
 }
