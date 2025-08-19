@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:myapp/controller/connect.dart';
 import 'package:myapp/controller/pocketbase.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class RatingView extends StatelessWidget {
@@ -53,10 +50,13 @@ class RatingView extends StatelessWidget {
               TextButton(
                 onPressed: () async {
                   Get.showOverlay(
+                    loadingWidget: Center(
+                      child: const CircularProgressIndicator(),
+                    ),
                     asyncFunction: () async {
                       final pbc = Get.put(PBController());
                       try {
-                        await pbc.pb
+                        var ratingRecord = await pbc.pb
                             .collection(collectionRatings)
                             .create(
                               body: {
@@ -65,11 +65,22 @@ class RatingView extends StatelessWidget {
                                 fieldUserRatingScore: v.value,
                               },
                             );
+                        var cc = Get.put(ConnectController());
+                        cc.outputCards[movieRecord!.doubanID!]!.value =
+                            OutputCard(
+                              imgUrl: cc
+                                  .outputCards[movieRecord!.doubanID]
+                                  ?.value
+                                  .imgUrl,
+                              rating: Rating.fromJson(ratingRecord.data),
+                            );
+                        Get.back();
                       } on ClientException catch (e) {
+                        // if (e.statusCode == 400) {
+                        //   return;
+                        // }
                         Get.log('Error creating rating: $e');
                       }
-
-                      Get.back(result: v.value);
                     },
                   );
                 },

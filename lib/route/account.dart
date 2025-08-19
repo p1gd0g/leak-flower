@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:myapp/controller/globalkey.dart';
 import 'package:myapp/controller/pocketbase.dart';
 import 'package:myapp/view/login.dart';

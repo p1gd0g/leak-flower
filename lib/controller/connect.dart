@@ -6,19 +6,21 @@ import 'package:myapp/controller/pocketbase.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class ConnectController extends GetConnect {
+  Map<int, Rx<OutputCard>> outputCards = {};
+
   Future<Response<OutputCard?>> getMovieData(MovieRecord movieRecord) async {
     final movieID = movieRecord.doubanID;
     final pbc = Get.put(PBController());
 
-    late Rating rating;
+    Rating? rating;
     try {
       final record = await pbc.pb
           .collection(collectionRatings)
           .getFirstListItem(
             // '$fieldDoubanID="$movieID" && $fieldUser="${pbc.authStore.record?.id}"',
-            '$fieldMovieID=$movieID && $fieldUser=${pbc.authStore.record?.id}',
+            '$fieldMovieID="${movieRecord.id}" && $fieldUser="${pbc.authStore.record?.id}"',
           );
-      Get.log('Rating for movie $movieID: ${record.data}');
+      // Get.log('Rating for movie $movieID: ${record.data}');
       rating = Rating.fromJson(record.data);
     } on ClientException catch (e) {
       Get.log('No rating found for movie $movieID: $e');
@@ -45,7 +47,10 @@ class ConnectController extends GetConnect {
 
         urlstr = urlstr.replaceFirst('https://', 'https://md.p1gd0g.cc/');
 
-        return OutputCard(imgUrl: urlstr, rating: rating);
+        var outputCard = OutputCard(imgUrl: urlstr, rating: rating);
+        outputCards[movieID!] = outputCard.obs;
+
+        return outputCard;
       },
       query: {'id': movieID.toString()},
     );
@@ -65,7 +70,8 @@ class Rating {
   double? userRatingScore;
   double? userRatingStar;
 
-  Rating({
+  Rating(
+    MovieRecord movieRecord, {
     this.id,
     this.user,
     this.movieID,
@@ -84,7 +90,7 @@ class Rating {
 
 class MovieRecord {
   String? id;
-  String? doubanID;
+  int? doubanID;
 
   MovieRecord({this.id, this.doubanID});
 
