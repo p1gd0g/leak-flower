@@ -60,6 +60,7 @@ class Home extends StatelessWidget {
               }
               final movies = snapshot.data!;
               return GridView.builder(
+                
                 padding: const EdgeInsets.all(8),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: isPortrait ? 2 : 3,
