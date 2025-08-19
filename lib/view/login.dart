@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:get/get.dart';
-import 'package:myapp/controller/pocketbase.dart';
+import 'package:leak_flower/controller/pocketbase.dart';
 
 final email = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
 

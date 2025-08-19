@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:html/parser.dart';
 import 'package:get/get.dart';
-import 'package:myapp/controller/pocketbase.dart';
+import 'package:leak_flower/controller/pocketbase.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class ConnectController extends GetConnect {

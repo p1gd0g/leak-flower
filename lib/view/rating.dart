@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/controller/connect.dart';
-import 'package:myapp/controller/pocketbase.dart';
+import 'package:leak_flower/controller/connect.dart';
+import 'package:leak_flower/controller/pocketbase.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 

@@ -1,12 +1,12 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/controller/connect.dart';
-import 'package:myapp/controller/pocketbase.dart';
+import 'package:leak_flower/controller/connect.dart';
+import 'package:leak_flower/controller/pocketbase.dart';
 import 'dart:developer' as developer;
-import 'package:myapp/route/account.dart';
-import 'package:myapp/util/screen.dart';
-import 'package:myapp/view/movie.dart';
+import 'package:leak_flower/route/account.dart';
+import 'package:leak_flower/util/screen.dart';
+import 'package:leak_flower/view/movie.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stack_trace/stack_trace.dart';
 
@@ -60,7 +60,6 @@ class Home extends StatelessWidget {
               }
               final movies = snapshot.data!;
               return GridView.builder(
-                
                 padding: const EdgeInsets.all(8),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: isPortrait ? 2 : 3,

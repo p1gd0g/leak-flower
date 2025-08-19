@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:myapp/controller/globalkey.dart';
-import 'package:myapp/controller/pocketbase.dart';
-import 'package:myapp/view/login.dart';
+import 'package:leak_flower/controller/globalkey.dart';
+import 'package:leak_flower/controller/pocketbase.dart';
+import 'package:leak_flower/view/login.dart';
 
 class AccountRoute {
   static onClickAccountBtn() {

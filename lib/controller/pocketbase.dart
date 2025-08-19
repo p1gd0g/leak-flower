@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:myapp/controller/prefs.dart';
+import 'package:leak_flower/controller/prefs.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 const String collectionUsers = 'users';

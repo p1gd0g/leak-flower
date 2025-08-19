@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/controller/connect.dart';
-import 'package:myapp/controller/pocketbase.dart';
-import 'package:myapp/route/account.dart';
-import 'package:myapp/view/rating.dart';
+import 'package:leak_flower/controller/connect.dart';
+import 'package:leak_flower/controller/pocketbase.dart';
+import 'package:leak_flower/route/account.dart';
+import 'package:leak_flower/view/rating.dart';
 
 class MovieItem extends StatelessWidget {
   const MovieItem(this.movieRecord, {super.key});

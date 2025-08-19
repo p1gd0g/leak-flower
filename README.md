@@ -5,7 +5,7 @@
 通过环境变量设置版本号
 
 ```
-$ENV:build_vsn='0.0.2'
+$ENV:build_vsn='0.0.3'
 ```
 
 打包 web

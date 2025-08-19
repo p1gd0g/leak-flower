@@ -1,6 +1,6 @@
 {
-    "name": "myapp",
-    "short_name": "myapp",
+    "name": "韭花",
+    "short_name": "韭花",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
