@@ -49,7 +49,16 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final pbc = Get.put(PBController());
     return Scaffold(
-      appBar: AppBar(title: const Text("韭花")),
+      appBar: AppBar(
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text("韭花", style: Get.textTheme.titleLarge),
+            SizedBox(width: 8),
+            Text('电影点映评分', style: Get.textTheme.titleMedium),
+          ],
+        ),
+      ),
       body: Center(
         child: FutureBuilder(
           future: pbc.pb.collection(collectionMovies).getFullList(),

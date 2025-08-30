@@ -18,15 +18,21 @@ class MovieItem extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(8),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CachedNetworkImage(
-              imageUrl: outputCard!.value.imgUrl!,
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  CircularProgressIndicator(value: downloadProgress.progress),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+            child: ClipRect(
+              child: AspectRatio(
+                aspectRatio: 0.72, // 或你想要的比例
+                child: CachedNetworkImage(
+                  imageUrl: outputCard!.value.imgUrl!,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                        value: downloadProgress.progress,
+                      ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
             ),
           ),
           Obx(() => Info(outputCard.value, movieRecord)),
