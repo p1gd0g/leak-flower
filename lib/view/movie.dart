@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leak_flower/controller/connect.dart';
+import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/pocketbase.dart';
 import 'package:leak_flower/route/account.dart';
+import 'package:leak_flower/view/poster.dart';
 import 'package:leak_flower/view/rating.dart';
 
 class MovieItem extends StatelessWidget {
@@ -15,59 +17,46 @@ class MovieItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var cc = Get.put(ConnectController());
     var outputCard = cc.outputCards[movieRecord.doubanID];
-    return Card(
-      margin: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRect(
-              child: AspectRatio(
-                aspectRatio: 0.72, // 或你想要的比例
-                child: CachedNetworkImage(
-                  imageUrl: outputCard!.value.imgUrl!,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                        value: downloadProgress.progress,
-                      ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
-            ),
+    return InkWell(
+      onTap: () {
+        Get.to(() => MovieInfoView(outputCard.value, movieRecord));
+      },
+      child: Card(
+        margin: const EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Hero(
+            tag: MovieInfoView.heroTag,
+            child: newPoster(outputCard!.value),
           ),
-          Obx(() => Info(outputCard.value, movieRecord)),
-        ],
+        ),
       ),
     );
   }
 }
 
-class Info extends StatelessWidget {
-  const Info(this.outputCard, this.movieRecord, {super.key});
+class MovieInfoView extends StatelessWidget {
+  static String heroTag = 'movie_info_view_hero_tag';
+
+  const MovieInfoView(this.outputCard, this.movieRecord, {super.key});
 
   final OutputCard outputCard;
   final MovieRecord movieRecord;
 
   @override
   Widget build(BuildContext context) {
-    return outputCard.rating == null
-        ? TextButton(
-            onPressed: () {
-              final pbc = Get.put(PBController());
-
-              if (pbc.isSignedIn) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return RatingView(movieRecord);
-                  },
-                );
-              } else {
-                AccountRoute.onClickAccountBtn();
-              }
-            },
-            child: Text('我要评分'),
-          )
-        : Text('我的评分：${outputCard.rating?.userRatingScore}');
+    return Scaffold(
+      appBar: AppBar(title: Text(outputCard.title ?? '')),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Hero(tag: heroTag, child: newPoster(outputCard)),
+            UserRatingRow(outputCard, movieRecord),
+            LeakFlowerRatingRow(movieRecord),
+          ],
+        ),
+      ),
+    );
   }
 }

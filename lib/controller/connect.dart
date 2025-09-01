@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:get/get.dart';
+import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/pocketbase.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -31,23 +33,11 @@ class ConnectController extends GetConnect {
       url,
       decoder: (data) {
         final doc = parse(data);
-        // <div class="picture-wrapper" style="background-image: url(https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2924250338.jpeg)">
-
-        var ele = doc.getElementsByClassName('picture-wrapper').firstOrNull;
-        if (ele == null) {
-          return null;
-        }
-
-        // "background-image: url(https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2924250338.jpeg)"
-        var style = ele.attributes['style'];
-        var urlstr = style?.split('url(').lastOrNull?.split(')').firstOrNull;
-        if (urlstr == null) {
-          return null;
-        }
-
-        urlstr = urlstr.replaceFirst('https://', 'https://md.p1gd0g.cc/');
-
-        var outputCard = OutputCard(imgUrl: urlstr, rating: rating);
+        var outputCard = OutputCard(
+          imgUrl: getUrlStr(doc),
+          rating: rating,
+          title: getTitle(doc),
+        );
         outputCards[movieID!] = outputCard.obs;
 
         return outputCard;
@@ -55,47 +45,32 @@ class ConnectController extends GetConnect {
       query: {'id': movieID.toString()},
     );
   }
-}
 
-class OutputCard {
-  String? imgUrl;
-  Rating? rating;
-  OutputCard({this.imgUrl, this.rating});
-}
+  String? getUrlStr(Document doc) {
+    // <div class="picture-wrapper" style="background-image: url(https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2924250338.jpeg)">
 
-class Rating {
-  String? id;
-  String? user;
-  String? movieID;
-  double? userRatingScore;
-  double? userRatingStar;
+    var ele = doc.getElementsByClassName('picture-wrapper').firstOrNull;
+    if (ele == null) {
+      return null;
+    }
 
-  Rating(
-    MovieRecord movieRecord, {
-    this.id,
-    this.user,
-    this.movieID,
-    this.userRatingScore,
-    this.userRatingStar,
-  });
-
-  Rating.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    user = json[fieldUser];
-    movieID = json[fieldMovieID];
-    userRatingScore = (json['userRatingScore'] as num?)?.toDouble();
-    userRatingStar = (json['userRatingStar'] as num?)?.toDouble();
+    // "background-image: url(https://img1.doubanio.com/view/photo/m_ratio_poster/public/p2924250338.jpeg)"
+    var style = ele.attributes['style'];
+    var urlstr = style?.split('url(').lastOrNull?.split(')').firstOrNull;
+    if (urlstr == null) {
+      return null;
+    }
+    urlstr = urlstr.replaceFirst('https://', 'https://md.p1gd0g.cc/');
+    return urlstr;
   }
-}
 
-class MovieRecord {
-  String? id;
-  int? doubanID;
-
-  MovieRecord({this.id, this.doubanID});
-
-  MovieRecord.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    doubanID = json[fieldDoubanID];
+  String? getTitle(Document doc) {
+    var ele = doc.getElementsByClassName('main-title').firstOrNull;
+    if (ele == null) {
+      return null;
+    }
+    return ele.text.trim();
   }
+
+
 }

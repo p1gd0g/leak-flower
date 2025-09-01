@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leak_flower/controller/connect.dart';
+import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/pocketbase.dart';
+import 'package:leak_flower/route/account.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
@@ -14,7 +16,6 @@ class RatingView extends StatelessWidget {
   Widget build(BuildContext context) {
     var v = 1.0.obs;
     return SimpleDialog(
-      // title: Text('评分'),
       children: [
         Obx(
           () => SfSlider(
@@ -56,6 +57,7 @@ class RatingView extends StatelessWidget {
                     asyncFunction: () async {
                       final pbc = Get.put(PBController());
                       try {
+                        // todo 增加权重分
                         var ratingRecord = await pbc.pb
                             .collection(collectionRatings)
                             .create(
@@ -90,6 +92,74 @@ class RatingView extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class LeakFlowerRatingRow extends StatelessWidget {
+  const LeakFlowerRatingRow(this.movieRecord, {super.key});
+
+  final MovieRecord movieRecord;
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Get.put(PBController()).getLeakFlowerRating(movieRecord),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        if (!snapshot.hasData || snapshot.data == null) {
+          return Text('No data found');
+        }
+
+        return Text('韭花评分：${snapshot.data?.toStringAsFixed(1)}');
+      },
+    );
+  }
+}
+
+class UserRatingRow extends StatelessWidget {
+  const UserRatingRow(this.outputCard, this.movieRecord, {super.key});
+  final OutputCard outputCard;
+  final MovieRecord movieRecord;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Get.put(PBController()).getRating(movieRecord),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        if (!snapshot.hasData && outputCard.rating == null) {
+          return TextButton(
+            onPressed: () {
+              final pbc = Get.put(PBController());
+              if (pbc.isSignedIn) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return RatingView(movieRecord);
+                  },
+                );
+              } else {
+                AccountRoute.onClickAccountBtn();
+              }
+            },
+            child: Text('我要评分'),
+          );
+        } else {
+          return Text(
+            '我的评分：${snapshot.data?.userRatingScore?.toStringAsFixed(1)}',
+          );
+        }
+      },
     );
   }
 }

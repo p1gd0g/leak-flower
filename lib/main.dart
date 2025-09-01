@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leak_flower/controller/connect.dart';
+import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/pocketbase.dart';
 import 'dart:developer' as developer;
 import 'package:leak_flower/route/account.dart';

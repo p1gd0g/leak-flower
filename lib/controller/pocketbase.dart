@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
+import 'package:leak_flower/controller/connect.dart';
+import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/prefs.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -35,8 +37,6 @@ class PBController extends GetxController {
     );
 
     pb = PocketBase('https://pb.p1gd0g.cc', authStore: store);
-    // Get.log('PocketBase initialized with auth store, ${pb.authStore.isValid}');
-    // Get.log('PocketBase initialized with auth store, ${pb.authStore.record}');
   }
 
   Future<RecordModel> register(
@@ -61,5 +61,46 @@ class PBController extends GetxController {
 
   String? getEmail() {
     return pb.authStore.record?.data[fieldEmail];
+  }
+
+  Future<Rating?> getRating(MovieRecord movieRecord) async {
+    final pbc = Get.put(PBController());
+    final movieID = movieRecord.id;
+    final userID = pbc.authStore.record?.id;
+    Rating? rating;
+    try {
+      final record = await pbc.pb
+          .collection(collectionRatings)
+          .getFirstListItem('$fieldMovieID="$movieID" && $fieldUser="$userID"');
+      rating = Rating.fromJson(record.data);
+    } on ClientException catch (e) {
+      Get.log('No rating found for movie $movieID: $e');
+      return null;
+    }
+    return rating;
+  }
+
+  Future<double?> getLeakFlowerRating(MovieRecord movieRecord) async {
+    final pbc = Get.put(PBController());
+    final movieID = movieRecord.doubanID;
+    try {
+      final records = await pbc.pb
+          .collection(collectionRatings)
+          .getFullList(filter: '$fieldMovieID="${movieRecord.id}"');
+
+      List<Rating> ratings = records
+          .map((record) => Rating.fromJson(record.data))
+          .where((rating) => rating.userRatingScore != null)
+          .toList();
+
+      // todo 改为权重分数，而不是原始分数
+      return ratings.isNotEmpty
+          ? ratings.map((r) => r.userRatingScore!).reduce((a, b) => a + b) /
+                ratings.length
+          : 0;
+    } on ClientException catch (e) {
+      Get.log('No rating found for movie $movieID: $e');
+      return 0;
+    }
   }
 }
