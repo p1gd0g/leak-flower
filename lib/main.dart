@@ -51,12 +51,32 @@ class Home extends StatelessWidget {
     final pbc = Get.put(PBController());
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => AccountRoute.onClickAccountBtn(),
+            icon: Icon(Icons.account_circle),
+          ),
+        ],
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text("韭花", style: Get.textTheme.titleLarge),
             SizedBox(width: 8),
             Text('电影点映评分', style: Get.textTheme.titleMedium),
+            SizedBox(width: 8),
+            FutureBuilder<PackageInfo>(
+              future: PackageInfo.fromPlatform(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Text(
+                    style: Get.textTheme.titleSmall,
+                    "${Env.version}/${snapshot.data?.version ?? 'Unknown version'}",
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -115,27 +135,27 @@ class Home extends StatelessWidget {
           },
         ),
       ),
-      bottomSheet: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          FutureBuilder<PackageInfo>(
-            future: PackageInfo.fromPlatform(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Text(
-                  "${Env.version}/${snapshot.data?.version ?? 'Unknown version'}",
-                );
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          ),
-          IconButton(
-            onPressed: () => AccountRoute.onClickAccountBtn(),
-            icon: Icon(Icons.account_circle),
-          ),
-        ],
-      ),
+      // bottomSheet: Row(
+      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //   children: [
+      //     FutureBuilder<PackageInfo>(
+      //       future: PackageInfo.fromPlatform(),
+      //       builder: (context, snapshot) {
+      //         if (snapshot.connectionState == ConnectionState.done) {
+      //           return Text(
+      //             "${Env.version}/${snapshot.data?.version ?? 'Unknown version'}",
+      //           );
+      //         } else {
+      //           return CircularProgressIndicator();
+      //         }
+      //       },
+      //     ),
+      //     IconButton(
+      //       onPressed: () => AccountRoute.onClickAccountBtn(),
+      //       icon: Icon(Icons.account_circle),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
