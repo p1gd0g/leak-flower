@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:leak_flower/controller/connect.dart';
 import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/prefs.dart';
 import 'package:pocketbase/pocketbase.dart';

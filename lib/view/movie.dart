@@ -1,10 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leak_flower/controller/connect.dart';
 import 'package:leak_flower/controller/data.dart';
-import 'package:leak_flower/controller/pocketbase.dart';
-import 'package:leak_flower/route/account.dart';
 import 'package:leak_flower/view/poster.dart';
 import 'package:leak_flower/view/rating.dart';
 
@@ -46,7 +43,7 @@ class MovieInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(outputCard.title ?? '')),
+      appBar: AppBar(title: Text(outputCard.movieRecord?.title ?? '')),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

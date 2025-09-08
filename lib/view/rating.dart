@@ -57,7 +57,7 @@ class RatingView extends StatelessWidget {
                     asyncFunction: () async {
                       final pbc = Get.put(PBController());
                       try {
-                        // todo 增加权重分
+                        // TODO 增加权重分
                         var ratingRecord = await pbc.pb
                             .collection(collectionRatings)
                             .create(
@@ -68,14 +68,8 @@ class RatingView extends StatelessWidget {
                               },
                             );
                         var cc = Get.put(ConnectController());
-                        cc.outputCards[movieRecord!.doubanID!]!.value =
-                            OutputCard(
-                              imgUrl: cc
-                                  .outputCards[movieRecord!.doubanID]
-                                  ?.value
-                                  .imgUrl,
-                              rating: Rating.fromJson(ratingRecord.data),
-                            );
+                        cc.outputCards[movieRecord!.doubanID!]!.value.myRating =
+                            Rating.fromJson(ratingRecord.data);
                         Get.back();
                       } on ClientException catch (e) {
                         // if (e.statusCode == 400) {
@@ -137,7 +131,7 @@ class UserRatingRow extends StatelessWidget {
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         }
-        if (!snapshot.hasData && outputCard.rating == null) {
+        if (!snapshot.hasData && outputCard.myRating == null) {
           return TextButton(
             onPressed: () {
               final pbc = Get.put(PBController());

@@ -116,7 +116,7 @@ class Home extends StatelessWidget {
                           if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           }
-                          final outputCard = snapshot.data?.body;
+                          final outputCard = snapshot.data;
                           if (outputCard == null) {
                             return Text('No data found');
                           }
