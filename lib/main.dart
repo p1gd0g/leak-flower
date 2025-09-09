@@ -1,9 +1,12 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leak_flower/controller/connect.dart';
 import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/pocketbase.dart';
+import 'package:leak_flower/firebase_options.dart';
 import 'dart:developer' as developer;
 import 'package:leak_flower/route/account.dart';
 import 'package:leak_flower/util/screen.dart';
@@ -24,8 +27,9 @@ class Env {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then((x) {
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((
+    x,
+  ) {
     FirebaseAnalytics.instance.logAppOpen();
   });
 
