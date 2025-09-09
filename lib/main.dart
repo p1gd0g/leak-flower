@@ -7,6 +7,7 @@ import 'package:leak_flower/controller/pocketbase.dart';
 import 'dart:developer' as developer;
 import 'package:leak_flower/route/account.dart';
 import 'package:leak_flower/util/screen.dart';
+import 'package:leak_flower/util/theme.dart';
 import 'package:leak_flower/view/movie.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stack_trace/stack_trace.dart';
@@ -38,7 +39,9 @@ void main() {
       },
       home: Home(),
       title: "韭花",
-      theme: FlexThemeData.light(scheme: FlexScheme.mandyRed),
+      theme: AppTheme.light,
+      // darkTheme: AppTheme.dark,
+      // themeMode: ThemeMode.system,
     ),
   );
 }

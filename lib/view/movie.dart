@@ -23,7 +23,7 @@ class MovieItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Hero(
-            tag: MovieInfoView.heroTag,
+            tag: MovieInfoView.heroTag + (movieRecord.id ?? ''),
             child: newPoster(outputCard!.value),
           ),
         ),
@@ -48,7 +48,10 @@ class MovieInfoView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Hero(tag: heroTag, child: newPoster(outputCard)),
+            Hero(
+              tag: heroTag + (movieRecord.id ?? ''),
+              child: newPoster(outputCard),
+            ),
             UserRatingRow(outputCard, movieRecord),
             LeakFlowerRatingRow(movieRecord),
           ],
