@@ -11,6 +11,7 @@ import 'package:leak_flower/util/theme.dart';
 import 'package:leak_flower/view/movie.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stack_trace/stack_trace.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Def {
   static const String version = "vsn";
@@ -56,7 +57,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () => AccountRoute.onClickAccountBtn(),
+            onPressed: () => launchUrlString('https://www.p1gd0g.cc'),
             icon: Icon(Icons.account_circle),
           ),
         ],
@@ -138,27 +139,10 @@ class Home extends StatelessWidget {
           },
         ),
       ),
-      // bottomSheet: Row(
-      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //   children: [
-      //     FutureBuilder<PackageInfo>(
-      //       future: PackageInfo.fromPlatform(),
-      //       builder: (context, snapshot) {
-      //         if (snapshot.connectionState == ConnectionState.done) {
-      //           return Text(
-      //             "${Env.version}/${snapshot.data?.version ?? 'Unknown version'}",
-      //           );
-      //         } else {
-      //           return CircularProgressIndicator();
-      //         }
-      //       },
-      //     ),
-      //     IconButton(
-      //       onPressed: () => AccountRoute.onClickAccountBtn(),
-      //       icon: Icon(Icons.account_circle),
-      //     ),
-      //   ],
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => AccountRoute.onClickAccountBtn(),
+        child: Icon(Icons.account_box),
+      ),
     );
   }
 }

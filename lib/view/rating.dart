@@ -109,7 +109,10 @@ class LeakFlowerRatingRow extends StatelessWidget {
           return Text('No data found');
         }
 
-        return Text('韭花评分：${snapshot.data?.toStringAsFixed(1)}');
+        return Text(
+          '韭花评分：${snapshot.data?.toStringAsFixed(1)}',
+          style: Get.textTheme.titleLarge,
+        );
       },
     );
   }
@@ -146,14 +149,34 @@ class UserRatingRow extends StatelessWidget {
                 AccountRoute.onClickAccountBtn();
               }
             },
-            child: Text('我要评分'),
+            child: Text(
+              '我要评分',
+              style: Get.textTheme.titleLarge?.copyWith(
+                color: Get.theme.colorScheme.primary,
+              ),
+            ),
           );
         } else {
           return Text(
             '我的评分：${snapshot.data?.userRatingScore?.toStringAsFixed(1)}',
+            style: Get.textTheme.titleLarge,
           );
         }
       },
+    );
+  }
+}
+
+class DoubanRatingRow extends StatelessWidget {
+  const DoubanRatingRow(this.movieRecord, {super.key});
+
+  final MovieRecord? movieRecord;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '郫县评分：${movieRecord?.openRatingScore == 0 ? '未出' : movieRecord?.openRatingScore?.toStringAsFixed(1)}',
+      style: Get.textTheme.titleLarge,
     );
   }
 }

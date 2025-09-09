@@ -24,7 +24,7 @@ class MovieItem extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Hero(
             tag: MovieInfoView.heroTag + (movieRecord.id ?? ''),
-            child: newPoster(outputCard!.value),
+            child: newPoster(outputCard!.value, rect: true),
           ),
         ),
       ),
@@ -44,17 +44,21 @@ class MovieInfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(outputCard.movieRecord?.title ?? '')),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Hero(
-              tag: heroTag + (movieRecord.id ?? ''),
-              child: newPoster(outputCard),
-            ),
-            UserRatingRow(outputCard, movieRecord),
-            LeakFlowerRatingRow(movieRecord),
-          ],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 10,
+            children: [
+              Hero(
+                tag: heroTag + (movieRecord.id ?? ''),
+                child: newPoster(outputCard),
+              ),
+              DoubanRatingRow(movieRecord),
+              LeakFlowerRatingRow(movieRecord),
+              UserRatingRow(outputCard, movieRecord),
+            ],
+          ),
         ),
       ),
     );
