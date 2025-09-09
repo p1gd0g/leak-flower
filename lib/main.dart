@@ -23,6 +23,12 @@ class Env {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then((x) {
+    FirebaseAnalytics.instance.logAppOpen();
+  });
+
   Get.put(PBController());
   Get.put(ConnectController());
 
