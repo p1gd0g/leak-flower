@@ -6,6 +6,7 @@ import 'package:leak_flower/controller/pocketbase.dart';
 import 'package:leak_flower/route/account.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class RatingView extends StatelessWidget {
   const RatingView(this.movieRecord, {super.key});
@@ -174,9 +175,16 @@ class DoubanRatingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '郫县评分：${movieRecord?.openRatingScore == 0 ? '未出' : movieRecord?.openRatingScore?.toStringAsFixed(1)}',
-      style: Get.textTheme.titleLarge,
+    return TextButton(
+      onPressed: () {
+        launchUrlString(
+          'https://movie.douban.com/subject/${movieRecord?.doubanID}',
+        );
+      },
+      child: Text(
+        '郫县开分：${movieRecord?.openRatingScore == 0 ? '未出' : movieRecord?.openRatingScore?.toStringAsFixed(1)}',
+        style: Get.textTheme.titleLarge,
+      ),
     );
   }
 }

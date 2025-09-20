@@ -1,0 +1,110 @@
+{
+  "rating": {
+    "max": 10,
+    "average": 0,
+    "stars": "00",
+    "min": 0
+  },
+  "reviews_count": 1910,
+  "wish_count": 32890,
+  "douban_site": "",
+  "year": "2025",
+  "images": {
+    "small": "https://img3.doubanio.com\/view\/photo\/s_ratio_poster\/public\/p2922389852.jpg",
+    "large": "https://img3.doubanio.com\/view\/photo\/s_ratio_poster\/public\/p2922389852.jpg",
+    "medium": "https://img3.doubanio.com\/view\/photo\/s_ratio_poster\/public\/p2922389852.jpg"
+  },
+  "alt": "https:\/\/movie.douban.com\/subject\/26660874\/",
+  "id": "26660874",
+  "mobile_url": "https:\/\/movie.douban.com\/subject\/26660874\/mobile",
+  "title": "\u4e1c\u6781\u5c9b",
+  "do_count": null,
+  "share_url": "https:\/\/m.douban.com\/movie\/subject\/26660874",
+  "seasons_count": null,
+  "schedule_url": "https:\/\/movie.douban.com\/subject\/26660874\/cinema\/",
+  "episodes_count": null,
+  "countries": [
+    "\u4e2d\u56fd\u5927\u9646"
+  ],
+  "genres": [
+    "\u5267\u60c5",
+    "\u5386\u53f2",
+    "\u6218\u4e89"
+  ],
+  "collect_count": 106696,
+  "casts": [
+    {
+      "alt": "https:\/\/movie.douban.com\/celebrity\/1318883\/",
+      "avatars": {
+        "small": "https://img1.doubanio.com\/view\/personage\/m\/public\/9ec68bfd22eb28453c275734eae90548.jpg",
+        "large": "https://img1.doubanio.com\/view\/personage\/m\/public\/9ec68bfd22eb28453c275734eae90548.jpg",
+        "medium": "https://img1.doubanio.com\/view\/personage\/m\/public\/9ec68bfd22eb28453c275734eae90548.jpg"
+      },
+      "name": "\u6731\u4e00\u9f99",
+      "id": "1318883"
+    },
+    {
+      "alt": "https:\/\/movie.douban.com\/celebrity\/1276150\/",
+      "avatars": {
+        "small": "https://img1.doubanio.com\/view\/personage\/m\/public\/166c2ba71167392af1072d51df1fcd28.jpg",
+        "large": "https://img1.doubanio.com\/view\/personage\/m\/public\/166c2ba71167392af1072d51df1fcd28.jpg",
+        "medium": "https://img1.doubanio.com\/view\/personage\/m\/public\/166c2ba71167392af1072d51df1fcd28.jpg"
+      },
+      "name": "\u5434\u78ca",
+      "id": "1276150"
+    },
+    {
+      "alt": "https:\/\/movie.douban.com\/celebrity\/1315861\/",
+      "avatars": {
+        "small": "https://img1.doubanio.com\/view\/personage\/m\/public\/f5097add4fd4810b6f8729cfff263559.jpg",
+        "large": "https://img1.doubanio.com\/view\/personage\/m\/public\/f5097add4fd4810b6f8729cfff263559.jpg",
+        "medium": "https://img1.doubanio.com\/view\/personage\/m\/public\/f5097add4fd4810b6f8729cfff263559.jpg"
+      },
+      "name": "\u502a\u59ae",
+      "id": "1315861"
+    },
+    {
+      "alt": "https:\/\/movie.douban.com\/celebrity\/1318482\/",
+      "avatars": {
+        "small": "https://img1.doubanio.com\/view\/personage\/m\/public\/dd2d3f0c4ec9fc82331523362c2c19fc.jpg",
+        "large": "https://img1.doubanio.com\/view\/personage\/m\/public\/dd2d3f0c4ec9fc82331523362c2c19fc.jpg",
+        "medium": "https://img1.doubanio.com\/view\/personage\/m\/public\/dd2d3f0c4ec9fc82331523362c2c19fc.jpg"
+      },
+      "name": "\u6768\u7693\u5b87",
+      "id": "1318482"
+    }
+  ],
+  "current_season": null,
+  "original_title": "\u4e1c\u6781\u5c9b",
+  "summary": "\u4e8c\u6218\u671f\u95f4\uff0c\u4e2d\u56fd\u821f\u5c71\u9644\u8fd1\u6d77\u57df\uff0c\u4e00\u8258\u8f7d\u6ee1\u82f1\u519b\u6218\u4fd8\u7684\u65e5\u672c\u8d27\u8f6e\u88ab\u51fb\u6c89\uff0c\u4e0a\u5343\u540d\u82f1\u519b\u6218\u4fd8\u88ab\u65e5\u519b\u5c01\u9501\u4e8e\u8239\u8231\u5185\u3002\u7edd\u5883\u4e4b\u65f6\uff0c\u4e1c\u6781\u5c9b\u4e0a\u7684\u4e00\u7fa4\u6e14\u6c11\u6bc5\u7136\u524d\u6765\u3002\u4ed6\u4eec\u51ed\u501f\u9aa8\u5b50\u91cc\u7684\u5584\u826f\u3001\u91ce\u6027\u4e0e\u8840\u6027\uff0c\u5728\u60ca\u6d9b\u9a87\u6d6a\u4e2d\uff0c\u4e3a\u843d\u96be\u7684\u6218\u4fd8\u6253\u5f00\u4e00\u6761\u751f\u8def\u3002\n\u53d6\u6750\u81ea\u4e2d\u56fd\u6e14\u6c11\u8425\u6551\u82f1\u519b\u6218\u4fd8\u7684\u771f\u5b9e\u4e8b\u4ef6\u3002",
+  "subtype": "movie",
+  "directors": [
+    {
+      "alt": "https:\/\/movie.douban.com\/celebrity\/1274919\/",
+      "avatars": {
+        "small": "https://img1.doubanio.com\/view\/personage\/m\/public\/c135166b6a45c341964a63a9e2c72ea8.jpg",
+        "large": "https://img1.doubanio.com\/view\/personage\/m\/public\/c135166b6a45c341964a63a9e2c72ea8.jpg",
+        "medium": "https://img1.doubanio.com\/view\/personage\/m\/public\/c135166b6a45c341964a63a9e2c72ea8.jpg"
+      },
+      "name": "\u7ba1\u864e",
+      "id": "1274919"
+    },
+    {
+      "alt": "https:\/\/movie.douban.com\/celebrity\/1275235\/",
+      "avatars": {
+        "small": "https://img1.doubanio.com\/view\/celebrity\/m\/public\/p1586489358.49.jpg",
+        "large": "https://img1.doubanio.com\/view\/celebrity\/m\/public\/p1586489358.49.jpg",
+        "medium": "https://img1.doubanio.com\/view\/celebrity\/m\/public\/p1586489358.49.jpg"
+      },
+      "name": "\u8d39\u632f\u7fd4",
+      "id": "1275235"
+    }
+  ],
+  "comments_count": 57542,
+  "ratings_count": 101270,
+  "aka": [
+    "\u4e1c\u6781\u5927\u8425\u6551",
+    "Dongji Island",
+    "Dongji Rescue"
+  ]
+}

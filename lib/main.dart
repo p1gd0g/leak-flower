@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:leak_flower/controller/connect.dart';
 import 'package:leak_flower/controller/data.dart';
+import 'package:leak_flower/controller/globalkey.dart';
 import 'package:leak_flower/controller/pocketbase.dart';
 import 'package:leak_flower/firebase_options.dart';
 import 'dart:developer' as developer;
 import 'package:leak_flower/route/account.dart';
 import 'package:leak_flower/util/screen.dart';
 import 'package:leak_flower/util/theme.dart';
+import 'package:leak_flower/view/draw.dart';
 import 'package:leak_flower/view/movie.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stack_trace/stack_trace.dart';
@@ -51,6 +53,7 @@ void main() {
       home: Home(),
       title: "韭花",
       theme: AppTheme.light,
+      debugShowCheckedModeBanner: false,
       // darkTheme: AppTheme.dark,
       // themeMode: ThemeMode.system,
     ),
@@ -64,11 +67,13 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final pbc = Get.put(PBController());
     return Scaffold(
+      key: Get.put(GlobalKeyController()).scaffoldKey,
+      endDrawer: MyDrawer(),
       appBar: AppBar(
         actions: [
           IconButton(
             onPressed: () => launchUrlString('https://www.p1gd0g.cc'),
-            icon: Icon(Icons.account_circle),
+            icon: Icon(Icons.info),
           ),
         ],
         title: Row(
@@ -109,7 +114,7 @@ class Home extends StatelessWidget {
                   crossAxisCount: isPortrait ? 2 : 3,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
-                  childAspectRatio: 540 / 960,
+                  childAspectRatio: 720 / 960,
                 ),
                 itemBuilder: (context, index) {
                   final movie = movies.elementAtOrNull(index);
@@ -122,24 +127,22 @@ class Home extends StatelessWidget {
                   }
                   var movieRecord = MovieRecord.fromJson(movie.data);
                   final cc = Get.put(ConnectController());
-                  return Center(
-                    child: FutureBuilder(
-                      future: cc.getMovieData(movieRecord),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          }
-                          final outputCard = snapshot.data;
-                          if (outputCard == null) {
-                            return Text('No data found');
-                          }
-                          return MovieItem(movieRecord);
-                        } else {
-                          return CircularProgressIndicator();
+                  return FutureBuilder(
+                    future: cc.getMovieData(movieRecord),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
                         }
-                      },
-                    ),
+                        final outputCard = snapshot.data;
+                        if (outputCard == null) {
+                          return Text('No data found');
+                        }
+                        return MovieItem(movieRecord);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
                   );
                 },
               );
@@ -151,7 +154,7 @@ class Home extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => AccountRoute.onClickAccountBtn(),
-        child: Icon(Icons.account_box),
+        child: Icon(Icons.account_circle),
       ),
     );
   }
