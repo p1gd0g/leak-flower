@@ -12,7 +12,7 @@ import 'dart:developer' as developer;
 import 'package:leak_flower/route/account.dart';
 import 'package:leak_flower/util/screen.dart';
 import 'package:leak_flower/util/theme.dart';
-import 'package:leak_flower/view/draw.dart';
+import 'package:leak_flower/view/drawer.dart';
 import 'package:leak_flower/view/movie.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:stack_trace/stack_trace.dart';

@@ -1,11 +1,11 @@
 {
-    "name": "韭花",
+    "name": "韭花 - 电影点映评分",
     "short_name": "韭花",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",
     "theme_color": "#hexcode",
-    "description": "A new Flutter project.",
+    "description": "电影点映评分",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

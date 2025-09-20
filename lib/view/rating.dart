@@ -4,6 +4,7 @@ import 'package:leak_flower/controller/connect.dart';
 import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/pocketbase.dart';
 import 'package:leak_flower/route/account.dart';
+import 'package:leak_flower/util/math.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -159,7 +160,7 @@ class UserRatingRow extends StatelessWidget {
           );
         } else {
           return Text(
-            '我的评分：${snapshot.data?.userRatingScore?.toStringAsFixed(1)}',
+            '我的评分：${snapshot.data?.userRatingScore?.toStringAsFixed(1)}（${calcAccuracy(snapshot.data?.userRatingScore ?? 0, movieRecord.openRatingScore ?? 0)?.toStringAsPrecision(2)}%）',
             style: Get.textTheme.titleLarge,
           );
         }
@@ -183,7 +184,10 @@ class DoubanRatingRow extends StatelessWidget {
       },
       child: Text(
         '郫县开分：${movieRecord?.openRatingScore == 0 ? '未出' : movieRecord?.openRatingScore?.toStringAsFixed(1)}',
-        style: Get.textTheme.titleLarge,
+        style: Get.textTheme.titleLarge?.copyWith(
+          // douban color
+          color: Color(0xFF007A5E),
+        ),
       ),
     );
   }

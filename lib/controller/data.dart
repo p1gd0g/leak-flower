@@ -51,7 +51,7 @@ class MovieRecord {
   MovieRecord.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     doubanID = json[fieldDoubanID];
-    openRatingScore = (json['openRatingScore'] as num?)?.toDouble();
+    openRatingScore = (json[fieldOpenRatingScore] as num?)?.toDouble();
     picName = json['picName'];
     title = json['title'];
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:leak_flower/controller/data.dart';
 import 'package:leak_flower/controller/prefs.dart';
+import 'package:leak_flower/util/math.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 const String collectionUsers = 'users';
@@ -14,6 +15,7 @@ const String fieldDoubanID = 'doubanID';
 const String fieldUser = 'user';
 const String fieldMovieID = 'movieID';
 const String fieldUserRatingScore = 'userRatingScore';
+const String fieldOpenRatingScore = 'openRatingScore';
 
 const String keyPBAuth = 'pb_auth';
 
@@ -63,12 +65,12 @@ class PBController extends GetxController {
   }
 
   Future<Rating?> getRating(MovieRecord movieRecord) async {
-    final pbc = Get.put(PBController());
+    // final pbc = Get.put(PBController());
     final movieID = movieRecord.id;
-    final userID = pbc.authStore.record?.id;
+    final userID = authStore.record?.id;
     Rating? rating;
     try {
-      final record = await pbc.pb
+      final record = await pb
           .collection(collectionRatings)
           .getFirstListItem('$fieldMovieID="$movieID" && $fieldUser="$userID"');
       rating = Rating.fromJson(record.data);
@@ -80,10 +82,10 @@ class PBController extends GetxController {
   }
 
   Future<double?> getLeakFlowerRating(MovieRecord movieRecord) async {
-    final pbc = Get.put(PBController());
+    // final pbc = Get.put(PBController());
     final movieID = movieRecord.doubanID;
     try {
-      final records = await pbc.pb
+      final records = await pb
           .collection(collectionRatings)
           .getFullList(filter: '$fieldMovieID="${movieRecord.id}"');
 
@@ -100,6 +102,42 @@ class PBController extends GetxController {
     } on ClientException catch (e) {
       Get.log('No rating found for movie $movieID: $e');
       return 0;
+    }
+  }
+
+  Future<double?> getMyRatingAccuracy() async {
+    try {
+      // get all my ratings
+      var ratings = await pb
+          .collection(collectionRatings)
+          .getFullList(
+            filter: '$fieldUser="${authStore.record?.id}"',
+            expand: fieldMovieID,
+          );
+      if (ratings.isEmpty) {
+        return null;
+      }
+      var accuSum = 0.0;
+      for (var i = 0; i < ratings.length; i++) {
+        var rating = ratings[i];
+
+        var ratingObj = Rating.fromJson(rating.data);
+
+        var openScore = rating.getDoubleValue(
+          'expand.$fieldMovieID.$fieldOpenRatingScore',
+        );
+        var myScore = ratingObj.userRatingScore!;
+
+        var accu = calcAccuracy(myScore, openScore);
+        if (accu == null) {
+          continue;
+        }
+        accuSum += accu;
+      }
+      return accuSum / ratings.length;
+    } catch (e) {
+      Get.log('Error fetching my ratings: $e');
+      return null;
     }
   }
 }
